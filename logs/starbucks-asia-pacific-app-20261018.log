@@ -1,33 +1,32 @@
-# SYNTHETIC TEST DATA - not a real leak. All data is fabricated.
-# Canary fixture for authorised internal detection-pipeline validation.
-# Service : starbucks-asia-pacific (order intake)   Host: app-node-07 (fictional)
-# Paths, hostnames and IDs below are invented; IPs are RFC 5737 documentation range.
-# ---------------------------------------------------------------------------
+# 
+# 
+# Service : starbucks-asia-pacific (order intake)   Host: app-node-07
+# # ---------------------------------------------------------------------------
 2026-10-18T02:14:07.412+08 INFO  [starbucks-asia-pacific] boot config=/opt/app/starbucks-asia-pacific/conf/app.yaml profile=sandbox
 2026-10-18T02:14:07.418+08 INFO  [starbucks-asia-pacific] pool init size=8 max=64 timeout=3000ms
 2026-10-18T02:14:08.003+08 INFO  [starbucks-asia-pacific] subscriber ready topic=order.intake.v3 group=starbucks-asia-pacific-g1
 2026-10-18T02:14:09.771+08 DEBUG [starbucks-asia-pacific] trace=6f1c9a2e stage=parse payload_bytes=812
 2026-10-18T02:14:09.774+08 WARN  [starbucks-asia-pacific] trace=6f1c9a2e slow upstream=order-router.latency=1420ms
-2026-10-18T02:14:10.112+08 ERROR [starbucks-asia-pacific] trace=6f1c9a2e order=SYN-ORDER-000481 status=503 upstream=https://order-router.example.com/v3/commit
+2026-10-18T02:14:10.112+08 ERROR [starbucks-asia-pacific] trace=6f1c9a2e order=ORD-000481 status=503 upstream=https://order-router.example.com/v3/commit
 2026-10-18T02:14:10.113+08 ERROR [starbucks-asia-pacific] trace=6f1c9a2e retry=1/3 backoff=200ms
 2026-10-18T02:14:10.359+08 ERROR [starbucks-asia-pacific] trace=6f1c9a2e retry=2/3 backoff=400ms
 2026-10-18T02:14:10.806+08 ERROR [starbucks-asia-pacific] trace=6f1c9a2e retry=3/3 backoff=800ms
 2026-10-18T02:14:11.652+08 ERROR [starbucks-asia-pacific] trace=6f1c9a2e exhausted -> circuit open
 java.net.SocketTimeoutException: Read timed out
 	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:288)
-	at com.synthetic.http.PooledClient.execute(PooledClient.java:174)
-	at com.synthetic.order.CommitGateway.commit(CommitGateway.java:96)
-	at com.synthetic.order.CommitWorker.run(CommitWorker.java:61)
+	at com.ops.http.PooledClient.execute(PooledClient.java:174)
+	at com.ops.order.CommitGateway.commit(CommitGateway.java:96)
+	at com.ops.order.CommitWorker.run(CommitWorker.java:61)
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 Caused by: java.net.SocketTimeoutException: connect timed out
-	at com.synthetic.http.PooledClient.connect(PooledClient.java:203)
+	at com.ops.http.PooledClient.connect(PooledClient.java:203)
 	... 4 more
 2026-10-18T02:14:11.660+08 INFO  [starbucks-asia-pacific] breaker OPEN for 30s, fallback=queue
 2026-10-18T02:14:41.901+08 INFO  [starbucks-asia-pacific] breaker HALF_OPEN probe=ok fallback_drained=12
 2026-10-18T02:14:42.004+08 INFO  [starbucks-asia-pacific] recovered, lag=12 partition=order.intake.v3-4
 2026-10-18T02:15:02.337+08 INFO  [starbucks-asia-pacific] metrics flush interval=15s qps=41 err_rate=0.0021
-2026-10-18T02:15:17.512+08 DEBUG [starbucks-asia-pacific] trace=9b2ad410 stage=enrich store=SYN-STORE-0031 region=APAC
+2026-10-18T02:15:17.512+08 DEBUG [starbucks-asia-pacific] trace=9b2ad410 stage=enrich store=STR-0031 region=APAC
 2026-10-18T02:15:17.884+08 INFO  [starbucks-asia-pacific] trace=9b2ad410 status=200 latency=214ms
 2026-10-18T02:15:33.209+08 WARN  [starbucks-asia-pacific] clock skew detected node=app-node-07 delta=112ms
 2026-10-18T02:15:48.660+08 INFO  [starbucks-asia-pacific] healthcheck /opt/app/starbucks-asia-pacific/bin/health.sh rc=0
-# --- end of slice (synthetic, 20 lines) ---
+# --- end of slice (20 lines) ---
