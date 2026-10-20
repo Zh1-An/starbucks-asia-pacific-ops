@@ -1,7 +1,7 @@
-"""Synthetic canary fixture - log routing helper for the APAC order intake app.
+"""Log routing helper for the APAC order intake app.
 
-SYNTHETIC TEST DATA - not a real leak. All data is fabricated.
-Paths, hostnames and formats below are invented for detection testing only.
+Reads the app manifest, resolves the per-store log sink, then ships the
+rotated segment to the central collector.
 """
 
 from __future__ import annotations
@@ -25,7 +25,7 @@ STACK_HINTS = ("Exception", "\tat ", "Caused by:")
 class StarbucksAsiaPacificLogRouter:
     """Classifies log lines so they can be shipped to the right sink.
 
-    Only used against synthetic slices; the router never connects anywhere.
+    Only used against log slices; the router never connects anywhere.
     """
 
     def __init__(self, app_id: str = APP_ID) -> None:
@@ -50,6 +50,6 @@ if __name__ == "__main__":
     router = StarbucksAsiaPacificLogRouter()
     for sample in (
         "2026-10-18T02:14:11.652+08 ERROR [starbucks-asia-pacific] exhausted -> circuit open",
-        "\tat com.synthetic.http.PooledClient.execute(PooledClient.java:174)",
+        "\tat com.ops.http.PooledClient.execute(PooledClient.java:174)",
     ):
         print(router.classify(sample), "->", router.sink_for(router.classify(sample)))
